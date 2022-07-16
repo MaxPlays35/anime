@@ -1,4 +1,4 @@
-package com.radolyn.anime.newAnimeView
+package com.radolyn.anime.components.newAnimeView
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -10,16 +10,24 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.radolyn.anime.MainViewModel
-import com.radolyn.anime.titleView.TitlePreview
+import com.radolyn.anime.components.titleView.TitlePreview
 import java.net.URLEncoder
 
 @Composable
-fun NewAnimeView(navController: NavController, model: MainViewModel = viewModel()){
+fun NewAnimeView(navController: NavController, model: MainViewModel = viewModel()) {
     val anime by model.animes.collectAsState(initial = Pair(emptyList(), emptyList()))
 
-    LazyColumn() {
+    LazyColumn {
         items(anime.second!!) { item ->
-            TitlePreview(id = item.hashCode(), name = item.name, desc = item.description, imageUrl = item.icon, Modifier.selectable(true, onClick = { navController.navigate("viewAnime/${URLEncoder.encode(item.url)}") }))
+            TitlePreview(
+                id = item.hashCode(),
+                name = item.name,
+                desc = item.description,
+                imageUrl = item.icon,
+                Modifier.selectable(
+                    true,
+                    onClick = { navController.navigate("viewAnime/${URLEncoder.encode(item.url)}") })
+            )
         }
     }
 }

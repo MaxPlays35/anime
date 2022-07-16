@@ -23,12 +23,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.radolyn.anime.newAnimeView.NewAnimeView
+import com.radolyn.anime.components.newAnimeView.NewAnimeView
+import com.radolyn.anime.components.titleView.TitleView
+import com.radolyn.anime.components.updatedAnimeView.UpdatedAnimeView
 import com.radolyn.anime.parser.AnimePageParser
 import com.radolyn.anime.parser.MainPageParser
-import com.radolyn.anime.titleView.TitleView
 import com.radolyn.anime.ui.theme.AnimeTheme
-import com.radolyn.anime.updatedAnimeView.UpdatedAnimeView
 import kotlinx.coroutines.flow.flow
 import java.net.URLDecoder
 
@@ -41,8 +41,6 @@ class MainViewModel : ViewModel() {
             emit(this)
         }
     }
-
-
 }
 
 class MainActivity : ComponentActivity() {
@@ -51,7 +49,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             AnimeTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colors.background
+                ) {
                     MainScreen()
                 }
             }
@@ -103,10 +104,17 @@ fun MainScreen() {
             }
         }
     ) { innerPadding ->
-        NavHost(navController, startDestination = Screen.NewAnimeScreen.route, Modifier.padding(innerPadding)) {
+        NavHost(
+            navController,
+            startDestination = Screen.NewAnimeScreen.route,
+            Modifier.padding(innerPadding)
+        ) {
             composable(Screen.NewAnimeScreen.route) { NewAnimeView(navController) }
             composable(Screen.UpdatedAnimeScreen.route) { UpdatedAnimeView(navController) }
-            composable("viewAnime/{url}", arguments = listOf(navArgument("url") {type = NavType.StringType})) {
+            composable(
+                "viewAnime/{url}",
+                arguments = listOf(navArgument("url") { type = NavType.StringType })
+            ) {
                 val animeUrl = it.arguments?.getString("url")
                 if (animeUrl != null) {
                     TitleView(animeUrl = URLDecoder.decode(animeUrl))

@@ -1,4 +1,4 @@
-package com.radolyn.anime.titleView
+package com.radolyn.anime.components.titleView
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,13 +16,24 @@ import androidx.compose.ui.unit.sp
 import coil.compose.SubcomposeAsyncImage
 
 @Composable
-fun TitlePreview(id: Int, name: String, desc: String, imageUrl: String, modifier: Modifier = Modifier) {
+fun TitlePreview(
+    id: Int,
+    name: String,
+    desc: String,
+    imageUrl: String,
+    modifier: Modifier = Modifier
+) {
     Row(modifier = modifier.fillMaxWidth()) {
-        SubcomposeAsyncImage(model = imageUrl, contentDescription = "", modifier =  Modifier.padding(10.dp).clip(
-            RoundedCornerShape(10)
-        ), loading = {
-            CircularProgressIndicator()
-        })
+        SubcomposeAsyncImage(model = imageUrl,
+            contentDescription = "",
+            modifier = Modifier
+                .padding(10.dp)
+                .clip(
+                    RoundedCornerShape(10)
+                ),
+            loading = {
+                CircularProgressIndicator()
+            })
         Column(modifier = Modifier.padding(5.dp)) {
             Text(
                 text = name,

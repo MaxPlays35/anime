@@ -87,8 +87,12 @@ class AnimePageParser {
         val description = doc
             .selectFirst("#content > div > div.description")
             ?.text() ?: ""
+        val icon = doc
+            .selectXpath("//*[@id=\"content\"]/div/div[1]/div[1]/div[1]/div[2]/img")[0]
+            ?.attr("src") ?: ""
 
         return Anime(
+            icon = icon,
             name = name,
             alternativeNames = alternativeNames,
             type = type,

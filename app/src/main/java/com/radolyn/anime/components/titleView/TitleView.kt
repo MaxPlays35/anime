@@ -1,13 +1,11 @@
-package com.radolyn.anime.titleView
+package com.radolyn.anime.components.titleView
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
-import coil.compose.SubcomposeAsyncImage
 import com.radolyn.anime.MainViewModel
 import com.radolyn.anime.parser.model.Anime
 import kotlinx.coroutines.launch

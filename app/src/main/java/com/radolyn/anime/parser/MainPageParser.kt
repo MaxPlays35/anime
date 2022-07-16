@@ -1,10 +1,10 @@
 package com.radolyn.anime.parser
 
+import com.radolyn.anime.parser.model.NewAnime
+import com.radolyn.anime.parser.model.UpdatedAnime
 import org.jsoup.nodes.Document
 import parser.baseUrl
 import parser.getRequest
-import com.radolyn.anime.parser.model.NewAnime
-import com.radolyn.anime.parser.model.UpdatedAnime
 
 class MainPageParser {
     suspend fun getMainPageDetails(): Pair<List<UpdatedAnime>?, List<NewAnime>?> {
@@ -44,14 +44,23 @@ class MainPageParser {
         val updatedNode = doc.selectFirst("#slide-toggle-1")
 
         val res = updatedNode?.children()?.map {
-            val icon = it.selectFirst("div > div.media-left.last-update-img.mr-2 > div")!!.attr("style")
-                .replace("background-image: url(", "")
-                .replace(");", "")
-            val name = it.select("div > div.media-body > div > div.d-flex.mr-auto > span > span").text()
+            val icon =
+                it.selectFirst("div > div.media-left.last-update-img.mr-2 > div")!!
+                    .attr("style")
+                    .replace("background-image: url(", "")
+                    .replace(");", "")
+            val name =
+                it.select("div > div.media-body > div > div.d-flex.mr-auto > span > span")
+                    .text()
             val series =
-                it.select("div > div.media-body > div > div.ml-3.text-right > div.font-weight-600.text-truncate").text()
-            val type = it.select("div > div.media-body > div > div.ml-3.text-right > div.text-gray-dark-6").text()
-            val url = it.attr("onclick").replace("location.href='", "").replace("'", "")
+                it.select("div > div.media-body > div > div.ml-3.text-right > div.font-weight-600.text-truncate")
+                    .text()
+            val type =
+                it.select("div > div.media-body > div > div.ml-3.text-right > div.text-gray-dark-6")
+                    .text()
+            val url = it.attr("onclick")
+                    .replace("location.href='", "")
+                    .replace("'", "")
 
             UpdatedAnime(icon, name, "$series $type", baseUrl + url)
         }
