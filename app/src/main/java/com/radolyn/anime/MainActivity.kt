@@ -5,17 +5,16 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.ThumbUp
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
-import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -51,7 +50,7 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                    color = MaterialTheme.colorScheme.background
                 ) {
                     MainScreen()
                 }
@@ -60,11 +59,12 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-sealed class Screen(val route: String, val name: String, val icon: ImageVector) {
-    object NewAnimeScreen : Screen("newAnime", "New Anime", Icons.Filled.Refresh)
-    object UpdatedAnimeScreen : Screen("updatedAnime", "Updated Anime", Icons.Filled.ThumbUp)
+sealed class Screen(val route: String, val name: String, val icon: Int) {
+    object NewAnimeScreen : Screen("newAnime", "New Anime", R.drawable.added)
+    object UpdatedAnimeScreen : Screen("updatedAnime", "Updated Anime", R.drawable.updated)
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
@@ -76,14 +76,16 @@ fun MainScreen() {
 
     Scaffold(
         bottomBar = {
-            BottomNavigation {
+            NavigationBar {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentDestination = navBackStackEntry?.destination
+                val currentRoute = currentDestination?.route
+
                 items.forEach { screen ->
-                    BottomNavigationItem(
-                        icon = { Icon(screen.icon, contentDescription = "") },
-                        label = { screen.name },
-                        selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                    NavigationBarItem (
+                        icon = { Icon(ImageVector.vectorResource(id = screen.icon), contentDescription = screen.name, modifier = Modifier.size(32.dp)) },
+                        label = { Text(text = screen.name) },
+                        selected = currentRoute == screen.route,
                         onClick = {
                             navController.navigate(screen.route) {
                                 // Pop up to the start destination of the graph to
@@ -127,6 +129,6 @@ fun MainScreen() {
 
 @Preview(showBackground = true)
 @Composable
-fun TitlePreview() {
-//    TitleView(id = 1, name = "Власть книжного червя 3", desc = "ТВ Сериал / 2022", 10)
+fun MainTitlePreview() {
+//    TitlePreview(id = 1, name = "Власть книжного червя 3", desc = "ТВ Сериал / 2022", "https://i.stack.imgur.com/2fbPs.png")
 }

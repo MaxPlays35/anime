@@ -1,47 +1,68 @@
 package com.radolyn.anime.components.titleView
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.SubcomposeAsyncImage
+import coil.request.ImageRequest
+import com.radolyn.anime.parser.model.AnimeIcon
 
 @Composable
 fun TitlePreview(
     id: Int,
     name: String,
     desc: String,
-    imageUrl: String,
+    icon: AnimeIcon,
     modifier: Modifier = Modifier
 ) {
-    Row(modifier = modifier.fillMaxWidth()) {
-        SubcomposeAsyncImage(model = imageUrl,
+    Row(
+        modifier = Modifier.height(100.dp),
+        horizontalArrangement = Arrangement.Start
+    ) {
+        SubcomposeAsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(icon.resolution120x120)
+                .crossfade(true)
+                .build(),
             contentDescription = "",
             modifier = Modifier
                 .padding(10.dp)
-                .clip(
-                    RoundedCornerShape(10)
-                ),
+                .clip(RoundedCornerShape(100))
+                .aspectRatio(1f),
             loading = {
                 CircularProgressIndicator()
-            })
-        Column(modifier = Modifier.padding(5.dp)) {
+            },
+        )
+        Column(
+            modifier = Modifier
+                .padding(6.dp),
+        ) {
             Text(
                 text = name,
-                modifier = Modifier.padding(bottom = 8.dp),
-                fontWeight = FontWeight.Bold,
-                fontSize = 18.sp
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
-            Text(text = desc, fontSize = 16.sp, modifier = Modifier.padding(bottom = 4.dp))
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight()
+            ) {
+                Text(
+                    text = desc,
+                    modifier = Modifier
+                        .padding(bottom = 6.dp)
+                        .align(Alignment.BottomStart)
+                )
+            }
         }
     }
 }

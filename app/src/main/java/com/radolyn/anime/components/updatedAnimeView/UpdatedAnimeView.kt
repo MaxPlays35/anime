@@ -2,6 +2,7 @@ package com.radolyn.anime.components.updatedAnimeView
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -20,8 +21,9 @@ fun UpdatedAnimeView(navController: NavController, model: MainViewModel = viewMo
                 id = item.hashCode(),
                 name = item.name,
                 desc = item.description,
-                imageUrl = item.icon
+                icon = item.icon
             )
+            Divider()
         }
     }
 }

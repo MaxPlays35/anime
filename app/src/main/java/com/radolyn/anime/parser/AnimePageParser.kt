@@ -92,7 +92,7 @@ class AnimePageParser {
             ?.attr("src") ?: ""
 
         return Anime(
-            icon = icon,
+            icon = AnimeIcon(icon),
             name = name,
             alternativeNames = alternativeNames,
             type = type,

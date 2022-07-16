@@ -1,5 +1,6 @@
 package com.radolyn.anime.parser
 
+import com.radolyn.anime.parser.model.AnimeIcon
 import com.radolyn.anime.parser.model.NewAnime
 import com.radolyn.anime.parser.model.UpdatedAnime
 import org.jsoup.nodes.Document
@@ -34,7 +35,7 @@ class MainPageParser {
             val series = it.selectFirst("div > div.media-body > div:nth-child(3)")!!.text()
             val seriesCount = series.split(" ")[0].toInt()
 
-            NewAnime(icon, name, desc, seriesCount, baseUrl + url)
+            NewAnime(AnimeIcon(icon), name, desc, seriesCount, baseUrl + url)
         }
 
         return res
@@ -62,7 +63,7 @@ class MainPageParser {
                     .replace("location.href='", "")
                     .replace("'", "")
 
-            UpdatedAnime(icon, name, "$series $type", baseUrl + url)
+            UpdatedAnime(AnimeIcon(icon), name, "$series $type", baseUrl + url)
         }
 
         return res

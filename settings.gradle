@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "anime"
+rootProject.name = "AnimeGo Viewer"
 include ':app'

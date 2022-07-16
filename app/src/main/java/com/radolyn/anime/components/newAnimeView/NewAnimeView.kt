@@ -3,6 +3,7 @@ package com.radolyn.anime.components.newAnimeView
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -23,11 +24,12 @@ fun NewAnimeView(navController: NavController, model: MainViewModel = viewModel(
                 id = item.hashCode(),
                 name = item.name,
                 desc = item.description,
-                imageUrl = item.icon,
+                icon = item.icon,
                 Modifier.selectable(
                     true,
                     onClick = { navController.navigate("viewAnime/${URLEncoder.encode(item.url)}") })
             )
+            Divider()
         }
     }
 }

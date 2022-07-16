@@ -40,7 +40,7 @@ enum class AnimeMPAA {
 }
 
 data class Anime(
-    val icon: String,
+    val icon: AnimeIcon,
     val name: String,
     val alternativeNames: List<String>,
     val type: AnimeType,
